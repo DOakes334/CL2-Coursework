@@ -14,7 +14,7 @@ conda activate g2p
 cd $SLURM_SUBMIT_DIR
 
 # Multilingual English + Spanish with language tags
-python run.py \
+python src/run.py \
     --lang en es --strategy dedup --multilingual \
     --output_dir runs/multi_v4 \
     --d_model 384 --num_heads 6 --num_enc_layers 6 --num_dec_layers 6 --d_ff 1024 \
