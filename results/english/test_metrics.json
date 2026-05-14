@@ -1,0 +1,8 @@
+ "exact_match": 0.15333333333333332,
+  "per": 0.38904761904761903,
+  "weighted_edit_distance_mean": 2.221,
+  "char_levenshtein_mean": 2.9466666666666668,
+  "n": 300,
+  "per_unseen": 0.3716993968189623,
+  "exact_match_unseen": 0.15333333333333332,
+  "n_unseen": 300

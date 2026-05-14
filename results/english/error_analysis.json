@@ -1,0 +1,369 @@
+{
+  "hardest_examples": [
+    {
+      "grapheme": "hydroxymethylsulfonate",
+      "pred": "h a ɪ d ɹ ɒ l ɪ k s t ə n t",
+      "ref": "h a ɪ d r ɑ k s i m ɛ θ ə l s ʌ l f ə n e ɪ t",
+      "levenshtein": 15,
+      "per": 0.6521739130434783,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "oxibendazole",
+      "pred": "z o ʊ ə d ɛ k s ɪ n ə l",
+      "ref": "ɒ k s ɪ b ɛ n d ə z ə ʊ l",
+      "levenshtein": 10,
+      "per": 0.7692307692307693,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "trihexyphenidyl",
+      "pred": "t ɹ a ɪ θ ɹ ə s a ɪ k l i",
+      "ref": "t ɹ a ɪ h ɛ k s ɪ f ɛ n ɪ d ɪ l",
+      "levenshtein": 10,
+      "per": 0.625,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "disopyramide",
+      "pred": "d ɪ s p ɔ ɹ a ɪ d i a ɪ",
+      "ref": "d a ɪ s ə p ɪ ɹ ə m a ɪ d",
+      "levenshtein": 8,
+      "per": 0.6153846153846154,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "benzopyrazine",
+      "pred": "b ɛ n z o ʊ f ɹ e ɪ n i",
+      "ref": "b ɛ n z ə ʊ p a ɪ ɹ ə z iː n",
+      "levenshtein": 8,
+      "per": 0.5714285714285714,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "remixture",
+      "pred": "ɹ ɛ m ə t ɹ ɪ k s",
+      "ref": "ɹ iː m ɪ k s t j ʊ ə ɹ",
+      "levenshtein": 8,
+      "per": 0.7272727272727273,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "oneiromancy",
+      "pred": "o ʊ n i m æ ɹ o ʊ n ɛ k i",
+      "ref": "o ʊ n a ɪ ɹ o ʊ m æ n t s i",
+      "levenshtein": 7,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "disulfiram",
+      "pred": "d ɪ s f j ə l ɛ ɹ ə m",
+      "ref": "d a ɪ s ʌ l f ə ɹ æ m",
+      "levenshtein": 7,
+      "per": 0.6363636363636364,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "personality",
+      "pred": "p ə ɹ s ɛ n ə t l i",
+      "ref": "p ɝ s ə n æ l ɪ t i",
+      "levenshtein": 7,
+      "per": 0.7,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "bardolatrous",
+      "pred": "b æ ɹ ə d ɔ l ə s t",
+      "ref": "b ɑː ɹ d ɒ l ə t ɹ ə s",
+      "levenshtein": 7,
+      "per": 0.6363636363636364,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "cacoethics",
+      "pred": "k e ɪ t ɪ k ə s",
+      "ref": "k a k ə ʊ ɛ θ ɪ k s",
+      "levenshtein": 7,
+      "per": 0.7,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "gibraltar",
+      "pred": "ɡ ɪ b ə ɹ e ɪ t ə l ɚ",
+      "ref": "d͡ʒ ɪ b ɹ ɒ l t ə ɹ",
+      "levenshtein": 6,
+      "per": 0.6666666666666666,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "expressions",
+      "pred": "ɛ k s ə p ɹ ɛ z ɪ n ə s",
+      "ref": "ɪ k s p ɹ ɛ ʃ ə n z",
+      "levenshtein": 6,
+      "per": 0.6,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "circles",
+      "pred": "k ɹ ɪ l ə s",
+      "ref": "s ɝ k l̩ z",
+      "levenshtein": 6,
+      "per": 1.2,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "overspecialize",
+      "pred": "ə ʊ v ɚ s p ə s iː t ɪ l a ɪ z",
+      "ref": "o ʊ v ɚ s p ɛ ʃ ə l a ɪ z",
+      "levenshtein": 6,
+      "per": 0.46153846153846156,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "cacoethes",
+      "pred": "k ə s iː t",
+      "ref": "k a k ə ʊ iː θ iː z",
+      "levenshtein": 6,
+      "per": 0.6666666666666666,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "bioinformatics",
+      "pred": "b ɔ ɪ n ɪ f ɚ m æ s t ɪ k",
+      "ref": "b a ɪ o ʊ ɪ n f ɚ m æ t ɪ k s",
+      "levenshtein": 6,
+      "per": 0.4,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "housebroken",
+      "pred": "h ʌ s ə b ɝ k ə n",
+      "ref": "h a ʊ s b ɹ ə ʊ k ə n",
+      "levenshtein": 6,
+      "per": 0.5454545454545454,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "adolph",
+      "pred": "æ d o ʊ f ə l",
+      "ref": "e ɪ d ɑ l f",
+      "levenshtein": 6,
+      "per": 1.0,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "frigorific",
+      "pred": "f ɹ ɪ d͡ʒ ɪ s",
+      "ref": "f ɹ ɪ ɡ ə ɹ ɪ f ɪ k",
+      "levenshtein": 6,
+      "per": 0.6,
+      "exact_match": false,
+      "seen_in_train": false
+    }
+  ],
+  "top_substitutions": [
+    {
+      "hyp": "ə",
+      "ref": "ɪ",
+      "count": 11
+    },
+    {
+      "hyp": "ɪ",
+      "ref": "ə",
+      "count": 10
+    },
+    {
+      "hyp": "ə",
+      "ref": "æ",
+      "count": 9
+    },
+    {
+      "hyp": "ɛ",
+      "ref": "ə",
+      "count": 9
+    },
+    {
+      "hyp": "s",
+      "ref": "z",
+      "count": 8
+    },
+    {
+      "hyp": "ɛ",
+      "ref": "ɪ",
+      "count": 8
+    },
+    {
+      "hyp": "ɪ",
+      "ref": "i",
+      "count": 8
+    },
+    {
+      "hyp": "ə",
+      "ref": "ɑ",
+      "count": 8
+    },
+    {
+      "hyp": "æ",
+      "ref": "ə",
+      "count": 8
+    },
+    {
+      "hyp": "æ",
+      "ref": "ɪ",
+      "count": 7
+    },
+    {
+      "hyp": "ɡ",
+      "ref": "d͡ʒ",
+      "count": 6
+    },
+    {
+      "hyp": "i",
+      "ref": "ɪ",
+      "count": 6
+    },
+    {
+      "hyp": "ɑ",
+      "ref": "ʊ",
+      "count": 6
+    },
+    {
+      "hyp": "ɹ",
+      "ref": "ɚ",
+      "count": 5
+    },
+    {
+      "hyp": "ɚ",
+      "ref": "ɹ",
+      "count": 5
+    },
+    {
+      "hyp": "ə",
+      "ref": "ʊ",
+      "count": 5
+    },
+    {
+      "hyp": "ɪ",
+      "ref": "ɛ",
+      "count": 5
+    },
+    {
+      "hyp": "z",
+      "ref": "s",
+      "count": 5
+    },
+    {
+      "hyp": "ɒ",
+      "ref": "ə",
+      "count": 5
+    },
+    {
+      "hyp": "ə",
+      "ref": "ɛ",
+      "count": 4
+    }
+  ],
+  "top_insertions": [
+    {
+      "phone": "ə",
+      "count": 29
+    },
+    {
+      "phone": "ɪ",
+      "count": 27
+    },
+    {
+      "phone": "a",
+      "count": 17
+    },
+    {
+      "phone": "o",
+      "count": 14
+    },
+    {
+      "phone": "e",
+      "count": 13
+    },
+    {
+      "phone": "k",
+      "count": 12
+    },
+    {
+      "phone": "æ",
+      "count": 11
+    },
+    {
+      "phone": "ɹ",
+      "count": 10
+    },
+    {
+      "phone": "i",
+      "count": 10
+    },
+    {
+      "phone": "ɛ",
+      "count": 9
+    }
+  ],
+  "top_deletions": [
+    {
+      "phone": "ə",
+      "count": 21
+    },
+    {
+      "phone": "o",
+      "count": 11
+    },
+    {
+      "phone": "i",
+      "count": 9
+    },
+    {
+      "phone": "ɪ",
+      "count": 6
+    },
+    {
+      "phone": "a",
+      "count": 6
+    },
+    {
+      "phone": "e",
+      "count": 6
+    },
+    {
+      "phone": "ɹ",
+      "count": 4
+    },
+    {
+      "phone": "s",
+      "count": 3
+    },
+    {
+      "phone": "l",
+      "count": 3
+    },
+    {
+      "phone": "ɛ",
+      "count": 3
+    }
+  ]
