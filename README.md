@@ -14,9 +14,7 @@ for overlapping train/test items.
 ```text
 .
 ├── data/                 # English and Spanish TSV splits
-├── figures/              # Report figures
 ├── report/               # ACL LaTeX report and references
-├── results/              # Saved metrics, histories, and error analyses
 ├── scripts/              # SLURM launch scripts
 ├── src/
 │   ├── data.py           # Tokenisation, splits, datasets
@@ -122,8 +120,6 @@ Levenshtein distance, and seen/unseen breakdowns where applicable.
 
 ## Analysis
 
-Generate plots and compare completed runs:
-
 ```bash
 python src/analyse.py --output_dir runs/en_dedup
 python src/analyse.py --output_dir runs/en_dedup runs/spa_dedup runs/multi_dedup --compare
@@ -157,4 +153,4 @@ pdflatex g2p_report.tex
 ## Saved Results
 
 The `results/` directory contains the metrics and analysis files used for the
-submitted report. Large checkpoint files are not included.
+submitted report. 
