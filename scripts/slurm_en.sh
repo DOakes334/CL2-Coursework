@@ -13,7 +13,7 @@ source ~/.bashrc
 conda activate g2p
 cd $SLURM_SUBMIT_DIR
 
-python run.py \
+python src/run.py \
     --lang en --strategy dedup \
     --output_dir runs/en_dedup_v4 \
     --d_model 384 --num_heads 6 --num_enc_layers 6 --num_dec_layers 6 --d_ff 1024 \
