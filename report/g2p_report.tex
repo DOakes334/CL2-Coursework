@@ -1,0 +1,366 @@
+\documentclass[11pt]{article}
+\usepackage{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{tipa}
+\usepackage[section]{placeins}
+
+\title{Low-Resource Character-Level Grapheme-to-Phoneme Conversion with an Encoder--Decoder Transformer}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper describes a character-level encoder--decoder Transformer for
+grapheme-to-phoneme (G2P) conversion on English and Spanish. The system uses a
+bidirectional encoder with grouped-query attention and rotary position
+embeddings, and an autoregressive decoder with learned absolute positional
+embeddings. Evaluation is conducted under strict train/test grapheme
+deduplication, which prevents memorised pronunciations from inflating test
+scores. Monolingual exact match is 0.153 for English and 0.620 for Spanish;
+multilingual training improves these to 0.210 and 0.797 respectively. Error
+analysis shows that English failures are concentrated in reduced vowels,
+schwa-like alternations, and learned or loanword vocabulary. The results expose
+a sharp memorisation/generalisation gap in low-resource English G2P, while
+showing that multilingual training helps but does not erase the effect of
+orthographic depth.
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+Grapheme-to-phoneme conversion maps written word forms to pronunciations and is
+a central component in text-to-speech, automatic speech recognition, and lexical
+resource construction \citep{cheng2024survey}. The task is simple to state but
+typologically uneven: languages differ sharply in how transparently orthography
+encodes pronunciation. English is difficult because spelling reflects multiple
+historical layers, stress is usually not written, and vowel reduction is
+conditioned by prosodic structure. Spanish provides a useful contrast because
+its orthography is comparatively regular, although stress placement and
+loanwords still create errors.
+
+This contrast makes G2P a useful test case for orthographic depth. In a shallow
+orthography, much of the target phone string can be inferred from local
+letter--sound correspondences. In a deep orthography such as English, however,
+the same spelling pattern can map to different vowels depending on stress,
+morphology, lexical frequency, and etymological stratum. A low-resource
+character-level model therefore faces two different problems at once: learning
+productive spelling--sound correspondences, and deciding when the written form
+is insufficient and lexical memorisation is required.
+
+This work makes three contributions. First, it implements an encoder--decoder
+Transformer for character-level G2P, extending a class decoder-only baseline
+with a bidirectional source encoder. Second, it evaluates under strict
+deduplication so that test graphemes are not present in training. Third, it
+characterises the memorisation/generalisation gap in low-resource English G2P:
+seen-word performance can be near-perfect, but unseen English words remain hard.
+
+\section{Model}
+\label{sec:model}
+
+The model follows the encoder--decoder Transformer architecture
+\citep{vaswani2017attention}. The source sequence is a sequence of grapheme
+characters, optionally preceded by a language tag in multilingual training. The
+target sequence is a whitespace-tokenised IPA phone sequence.
+
+The encoder contains six bidirectional layers with model dimension
+$d_{\text{model}}=384$, six query heads, and two key/value heads. Self-attention
+therefore uses grouped-query attention (GQA), in which multiple query heads
+share each key/value head \citep{ainslie2023gqa}. Rotary position embeddings
+(RoPE) are applied to encoder queries and keys \citep{su2021roformer}. For a
+two-dimensional subspace, RoPE rotates a vector by position-dependent angle
+$m\theta_i$:
+\begin{equation}
+\label{eq:rope}
+R_{\Theta,m}
+\begin{bmatrix}x_{2i}\\x_{2i+1}\end{bmatrix}
+=
+\begin{bmatrix}
+\cos(m\theta_i) & -\sin(m\theta_i)\\
+\sin(m\theta_i) & \cos(m\theta_i)
+\end{bmatrix}
+\begin{bmatrix}x_{2i}\\x_{2i+1}\end{bmatrix}.
+\end{equation}
+Feed-forward layers use SwiGLU activations \citep{shazeer2020glu} with
+$d_{\text{ff}}=1024$. Layers use pre-layer normalisation residual blocks and
+stochastic depth increasing linearly from 0 to 0.1 across depth.
+
+The decoder contains six autoregressive layers. Each layer applies causal
+multi-head self-attention, cross-attention over the final encoder states, and a
+SwiGLU feed-forward block. Decoder positions are learned absolute embeddings
+rather than RoPE. This asymmetry is deliberate: the encoder benefits from
+relative grapheme distance, while the decoder generates short phone sequences
+where absolute output position is sufficient. All decoder layers attend to the
+same final encoder output, with decoder queries and encoder keys/values in
+cross-attention. The output projection is tied to the target embedding matrix,
+following \citet{press2017using}. The resulting monolingual English and Spanish
+models contain approximately 19M trainable parameters.
+
+This positional asymmetry is also linguistically motivated. Grapheme strings
+contain local and semi-local dependencies: digraphs, vowel contexts, suffixes,
+and neighbouring consonants often determine phone choice, and these patterns may
+occur at different absolute positions in words of different lengths. RoPE is
+therefore useful in the encoder because it represents relative distance between
+graphemes. The decoder, by contrast, produces a short, mostly monotonic phone
+sequence in which output position is less structurally variable; learned
+absolute positions are sufficient, while cross-attention supplies the
+source-side information needed for alignment.
+Table~\ref{tab:hyperparams} summarises the main architecture, training, and
+decoding settings used in the reported experiments.
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{ll}
+\toprule
+Setting & Value \\
+\midrule
+Model dimension & 384 \\
+Encoder / decoder layers & 6 / 6 \\
+Attention heads & 6 query heads, 2 KV heads \\
+Feed-forward dimension & 1024 \\
+Activation & SwiGLU \\
+Layer normalisation & Pre-LN \\
+Stochastic depth & 0--0.1 across depth \\
+Label smoothing & 0.1 \\
+Beam size / length penalty & 4 / 0.6 \\
+Checkpoint averaging & top 3 validation checkpoints \\
+\bottomrule
+\end{tabular}
+\caption{Main architecture, training, and decoding settings.}
+\label{tab:hyperparams}
+\end{table}
+
+\section{Data and Experimental Setup}
+\label{sec:setup}
+
+Experiments use SIGMORPHON-style G2P data: English and Spanish each contain
+2,400 training items, 300 validation items, and 300 test items. Inputs are
+character-level grapheme sequences; outputs are whitespace-tokenised IPA phone
+sequences.
+
+The whitespace-tokenised IPA format mostly simplifies the task by making phones,
+rather than raw Unicode characters, the prediction units. This avoids forcing
+the model to learn that multi-character symbols such as affricates or
+diacritically marked phones should behave as single phonological units. However,
+Spanish exposed a practical tokenisation issue: stress markers were initially
+split from the following vowel during decoding, while the reference format
+expected them to be attached. This made exact match artificially zero despite
+many otherwise correct pronunciations. The final decoder output is normalised
+back to the reference convention by reattaching stress markers before scoring,
+illustrating that G2P evaluation is highly sensitive to tokenisation
+conventions.
+
+A critical preprocessing issue is train/test overlap. Two strategies were
+implemented. Strategy A, used for the main results, removes any training or
+validation item whose grapheme appears in the test set. This is the honest
+generalisation setting because a test word cannot be answered by memorised
+lookup. Strategy B keeps overlap but tags test items as seen or unseen; it is
+used only for memorisation analysis. In Strategy B, seen-word exact match was
+0.958, while unseen-word exact match was 0.156, demonstrating that overlap can
+mask poor generalisation.
+
+Training uses AdamW with cosine warmup, peak learning rate $2\cdot10^{-4}$ or
+$3\cdot10^{-4}$ depending on the run, warmup of 8 or 5 epochs, label smoothing
+$\epsilon=0.1$, dropout, stochastic depth, and checkpoint averaging over the
+top three validation checkpoints. The smoothed target distribution is:
+\begin{equation}
+\label{eq:ls}
+q(k\mid y)=
+\begin{cases}
+1-\epsilon, & k=y,\\
+\epsilon/(|V|-2), & k\neq y,\ k\neq \textsc{pad},\\
+0, & k=\textsc{pad}.
+\end{cases}
+\end{equation}
+Decoding uses beam search with beam size 4 and length penalty 0.6
+\citep{wu2016gnmt}. Training-only grapheme augmentation applies random swap,
+delete, and duplicate operations with probability 0.15, motivated by robust G2P
+augmentation work \citep{zhao2022rg2p}.
+
+Validation used two complementary signals. Validation loss was computed with
+teacher forcing, so it measures how well the model predicts the next phone given
+the gold previous phones. This is useful for checkpoint selection but can
+underestimate exposure-bias errors because the model is not conditioned on its
+own earlier mistakes. Validation PER and exact match were therefore computed
+with greedy autoregressive decoding, while final test evaluation used beam
+search.
+
+\section{Results and Analysis}
+\label{sec:results}
+
+Phone error rate (PER) is computed as token-level Levenshtein distance
+normalised by reference length:
+\begin{equation}
+\label{eq:per}
+\mathrm{PER}=\frac{\sum_i d(\hat{\mathbf{y}}_i,\mathbf{y}_i)}
+{\sum_i |\mathbf{y}_i|}.
+\end{equation}
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{llccc}
+\toprule
+System & Lang & EM & PER & WED \\
+\midrule
+Monolingual & EN & 0.153 & 0.389 & 2.221 \\
+Monolingual & ES & 0.620 & 0.107 & 0.841 \\
+Multilingual & EN & 0.210 & 0.298 & 2.087 \\
+Multilingual & ES & 0.797 & 0.051 & 0.443 \\
+\bottomrule
+\end{tabular}
+\caption{Strict-deduplication test results. Multilingual training improves both
+languages, with the largest absolute gain for Spanish and a smaller but
+meaningful reduction in English phone error rate.}
+\label{tab:results}
+\end{table}
+
+Table~\ref{tab:results} shows a large English--Spanish gap. Spanish reaches
+0.620 exact match and low PER under the same data scale and architecture. This
+supports the role of orthographic regularity in G2P difficulty
+\citep{cheng2024survey}. English, by contrast, achieves only 0.153 exact match
+on unseen words. The model often predicts plausible-looking pronunciations, but
+fails exact word-level transcription.
+
+Multilingual training improves both languages, but asymmetrically. Spanish
+rises from 0.620 to 0.797 exact match and halves PER from 0.107 to 0.051.
+English also improves, with exact match rising from 0.153 to 0.210 and PER
+falling from 0.389 to 0.298, but it remains much harder than Spanish. This
+suggests that the shared model benefits from additional character-to-phone
+evidence and cross-lingual regularities, while English stress-conditioned vowel
+reduction and loanword strata remain underdetermined from spelling alone.
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{lcc}
+\toprule
+Evaluation setting & Seen EM & Unseen EM \\
+\midrule
+Strategy B: overlap retained & 0.958 & 0.156 \\
+Strategy A: strict deduplication & -- & 0.153 \\
+\bottomrule
+\end{tabular}
+\caption{English memorisation and generalisation under the two evaluation
+strategies. Strategy A is used for the main results because it removes
+train/test grapheme overlap.}
+\label{tab:memorisation}
+\end{table}
+
+The memorisation results in Table~\ref{tab:memorisation} explain why the
+strict setting matters. When repeated graphemes are allowed, the model can
+nearly solve seen-word G2P by storing lexical pronunciations. Once repeated
+test graphemes are removed, English performance collapses to the unseen-word
+level. This is not a failure of sequence modelling alone; it reflects the
+amount of lexical and stress-conditioned information that a 2,400-item English
+training set cannot supply.
+
+\begin{figure}[!htbp]
+\centering
+\IfFileExists{../figures/training_curves.pdf}{%
+\includegraphics[width=\linewidth]{../figures/training_curves.pdf}}{%
+\fbox{\parbox{0.92\linewidth}{\centering Placeholder for English and Spanish
+training curves generated from \texttt{history.json}.}}}
+\caption{Validation loss and phone-error-rate curves for English and Spanish.
+The historical Spanish exact-match log is not plotted because an earlier
+stress-marker tokenisation error made that validation series unreliable; the
+final strict test exact match is reported in Table~\ref{tab:results}.}
+\label{fig:curves}
+\end{figure}
+
+Figure~\ref{fig:curves} shows Spanish stabilising at lower PER than English,
+matching the final test gap and suggesting that English difficulty is not only
+a decoding artefact.
+
+English errors are linguistically structured. The most frequent substitutions
+involve \textschwa{} vs.\ \textsci{}, \textschwa{} vs.\ \ae{}, and
+\textepsilon{} vs.\ \textschwa{}, indicating
+confusion among schwa, lax vowels, and stress-sensitive vowel qualities. This
+is expected: English vowel reduction neutralises contrasts in unstressed
+positions, and orthography generally does not encode the stress information
+needed to predict it \citep{flemming2005vowel}. Uniform label smoothing may
+exacerbate this by spreading probability mass over phonologically implausible
+substitutions.
+Table~\ref{tab:errors} gives representative high-frequency substitutions.
+
+\begin{table}[!htbp]
+\centering
+\small
+\begin{tabular}{lll}
+\toprule
+Reference & Prediction & Interpretation \\
+\midrule
+\textschwa{} & \textsci{} & reduced/lax vowel confusion \\
+\textsci{} & \textschwa{} & unstressed vowel reduction \\
+\textschwa{} & \ae{} & reduced vs full vowel \\
+\textepsilon{} & \textschwa{} & stress-conditioned reduction \\
+s & z & consonant voicing ambiguity \\
+\bottomrule
+\end{tabular}
+\caption{Representative high-frequency English substitution errors. The
+dominance of reduced-vowel errors shows that many failures are linguistic
+rather than random decoding mistakes.}
+\label{tab:errors}
+\end{table}
+
+The hardest English examples are also revealing: \textit{disopyramide},
+\textit{oneiromancy}, \textit{impregnable}, \textit{jambeau}, and
+\textit{remixture} are specialised, Latinate, or French-influenced forms. Such
+items are difficult for rule-based systems and neural systems alike because the
+correct pronunciation depends on etymological and lexical information not
+recoverable from a small character-level training set.
+
+This also clarifies why architecture changes have limited leverage. GQA, RoPE,
+SwiGLU, and checkpoint averaging improve optimisation and representation, but
+they do not add the missing linguistic variables. The most promising future
+improvements are therefore not simply larger beams or deeper layers, but
+sources of information aligned with the observed errors: stress prediction,
+morphological decomposition, phonologically structured smoothing, or pretraining
+on a larger pronunciation lexicon before fine-tuning on the coursework data.
+
+The multilingual results therefore refine rather than overturn the orthographic
+depth argument. The shared model transfers useful low-level evidence about
+sequence transduction and recurrent grapheme--phone mappings, especially for
+Spanish. However, language tags and shared parameters do not provide the missing
+English stress and lexical information, so English remains the lower-resource
+generalisation bottleneck.
+
+\section{Related Work}
+\label{sec:related}
+
+Neural G2P has long been framed as sequence transduction. \citet{yao2015sequence}
+showed that sequence-to-sequence LSTMs could rival strong conventional systems.
+Transformer G2P systems were later shown to be effective by
+\citet{yolchuyeva2020transformer}. The SIGMORPHON 2020 shared task formalised
+multilingual G2P evaluation and showed that strong neural baselines remain
+competitive, while releasing complete system outputs for error analysis
+\citep{gorman2020sigmorphon}. Recent surveys place G2P within broader speech
+technology pipelines and contrast finite-state, neural, and pretrained
+approaches \citep{cheng2024survey}. Pretrained systems such as T5- or
+ByT5-based G2P are attractive, but they require substantially more data and
+compute than assumed in this coursework setting.
+
+\section{Conclusion}
+\label{sec:conclusion}
+
+The encoder--decoder Transformer is effective for Spanish and benefits from
+multilingual training, but strict unseen English G2P remains difficult. The
+main limitation is not merely architecture but data scale: English requires
+stress, lexical, and etymological information that 2,400 examples do not
+robustly identify. Future work should test pretraining on CMUDict before
+SIGMORPHON fine-tuning, phonologically informed label smoothing, and
+morphology-aware augmentation for derived and compound words.
+
+\bibliography{references}
+
+\end{document}
