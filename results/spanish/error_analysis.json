@@ -1,0 +1,369 @@
+{
+  "hardest_examples": [
+    {
+      "grapheme": "supramediterráneo",
+      "pred": "s u p ɾ a m e ɾ a ˈn a",
+      "ref": "s u p ɾ a m e d i t e ˈr a n e o",
+      "levenshtein": 8,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "tetradimensionales",
+      "pred": "t e ɾ a d i s t e n o ˈl a l e s",
+      "ref": "t e t ɾ a d i m e n s j o ˈn a l e s",
+      "levenshtein": 6,
+      "per": 0.3333333333333333,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "soldadesco",
+      "pred": "s o l a d e ˈk o s",
+      "ref": "s o l d a ˈd e s k o",
+      "levenshtein": 5,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "vestibulococlear",
+      "pred": "b e s t i k o l e ˈa ɾ",
+      "ref": "b e s t i b u l o k o k l e ˈa ɾ",
+      "levenshtein": 5,
+      "per": 0.3125,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "badalonesa",
+      "pred": "b a d o ˈl e n a s",
+      "ref": "b a d a l o ˈn e s a",
+      "levenshtein": 5,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "alcaide",
+      "pred": "a l k a ˈd j e d e",
+      "ref": "a l ˈk a i d e",
+      "levenshtein": 4,
+      "per": 0.5714285714285714,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "evangelio",
+      "pred": "e b a n x e ˈl i k o",
+      "ref": "e b a n ˈx e l j o",
+      "levenshtein": 4,
+      "per": 0.4444444444444444,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "alondra",
+      "pred": "a l o n ˈd ɾ a ɾ a",
+      "ref": "a ˈl o n d ɾ a",
+      "levenshtein": 4,
+      "per": 0.5714285714285714,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "despierta",
+      "pred": "d e s p i ˈɾ e t a",
+      "ref": "d e s ˈp j e ɾ t a",
+      "levenshtein": 4,
+      "per": 0.4444444444444444,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "Borja",
+      "pred": "b o ˈx a ɾ",
+      "ref": "ˈb o ɾ x a",
+      "levenshtein": 4,
+      "per": 0.8,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "siútico",
+      "pred": "s i s ˈt i k o",
+      "ref": "ˈs j u t i k o",
+      "levenshtein": 4,
+      "per": 0.5714285714285714,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "skyline",
+      "pred": "e s ˈk l i n e",
+      "ref": "e s ˈk a i l a i n",
+      "levenshtein": 4,
+      "per": 0.4444444444444444,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "ambivalente",
+      "pred": "a m b j a ˈb l e n t e",
+      "ref": "a m b i b a ˈl e n t e",
+      "levenshtein": 4,
+      "per": 0.36363636363636365,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "adenohipófisis",
+      "pred": "a d e n o ˈp j o s i s",
+      "ref": "a d e n o i ˈp o f i s i s",
+      "levenshtein": 4,
+      "per": 0.3076923076923077,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "indivisibilidad",
+      "pred": "i n d i b i l i ˈd a d",
+      "ref": "i n d i b i s i b i l i ˈd a d",
+      "levenshtein": 4,
+      "per": 0.26666666666666666,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "fisgoneo",
+      "pred": "f i s ɡ o n e ˈo n e o",
+      "ref": "f i s ɡ o ˈn e o",
+      "levenshtein": 4,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "soberbia",
+      "pred": "s o b e ˈɾ i b a",
+      "ref": "s o ˈb e ɾ b j a",
+      "levenshtein": 4,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "horroroso",
+      "pred": "o ˈr o s o",
+      "ref": "o r o ˈɾ o s o",
+      "levenshtein": 3,
+      "per": 0.42857142857142855,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "Vaupés",
+      "pred": "ˈb a p w e s",
+      "ref": "b a u ˈp e s",
+      "levenshtein": 3,
+      "per": 0.5,
+      "exact_match": false,
+      "seen_in_train": false
+    },
+    {
+      "grapheme": "relojería",
+      "pred": "r e l o ˈx i a",
+      "ref": "r e l o x e ˈɾ i a",
+      "levenshtein": 3,
+      "per": 0.3333333333333333,
+      "exact_match": false,
+      "seen_in_train": false
+    }
+  ],
+  "top_substitutions": [
+    {
+      "hyp": "ˈt",
+      "ref": "t",
+      "count": 7
+    },
+    {
+      "hyp": "i",
+      "ref": "j",
+      "count": 6
+    },
+    {
+      "hyp": "n",
+      "ref": "ˈn",
+      "count": 6
+    },
+    {
+      "hyp": "ˈɾ",
+      "ref": "ɾ",
+      "count": 5
+    },
+    {
+      "hyp": "ɡ",
+      "ref": "x",
+      "count": 5
+    },
+    {
+      "hyp": "l",
+      "ref": "ˈl",
+      "count": 4
+    },
+    {
+      "hyp": "p",
+      "ref": "ˈp",
+      "count": 4
+    },
+    {
+      "hyp": "e",
+      "ref": "ɾ",
+      "count": 4
+    },
+    {
+      "hyp": "ɾ",
+      "ref": "a",
+      "count": 3
+    },
+    {
+      "hyp": "ɾ",
+      "ref": "r",
+      "count": 3
+    },
+    {
+      "hyp": "d",
+      "ref": "ˈd",
+      "count": 3
+    },
+    {
+      "hyp": "ˈl",
+      "ref": "ˈn",
+      "count": 3
+    },
+    {
+      "hyp": "ɾ",
+      "ref": "e",
+      "count": 3
+    },
+    {
+      "hyp": "ɾ",
+      "ref": "ˈɾ",
+      "count": 3
+    },
+    {
+      "hyp": "k",
+      "ref": "ˈk",
+      "count": 2
+    },
+    {
+      "hyp": "ˈr",
+      "ref": "ˈɾ",
+      "count": 2
+    },
+    {
+      "hyp": "ˈb",
+      "ref": "b",
+      "count": 2
+    },
+    {
+      "hyp": "a",
+      "ref": "ɾ",
+      "count": 2
+    },
+    {
+      "hyp": "b",
+      "ref": "ˈb",
+      "count": 2
+    },
+    {
+      "hyp": "i",
+      "ref": "a",
+      "count": 2
+    }
+  ],
+  "top_insertions": [
+    {
+      "phone": "i",
+      "count": 7
+    },
+    {
+      "phone": "a",
+      "count": 7
+    },
+    {
+      "phone": "o",
+      "count": 6
+    },
+    {
+      "phone": "e",
+      "count": 6
+    },
+    {
+      "phone": "t",
+      "count": 6
+    },
+    {
+      "phone": "j",
+      "count": 5
+    },
+    {
+      "phone": "ɾ",
+      "count": 4
+    },
+    {
+      "phone": "s",
+      "count": 4
+    },
+    {
+      "phone": "k",
+      "count": 4
+    },
+    {
+      "phone": "n",
+      "count": 3
+    }
+  ],
+  "top_deletions": [
+    {
+      "phone": "s",
+      "count": 5
+    },
+    {
+      "phone": "a",
+      "count": 4
+    },
+    {
+      "phone": "n",
+      "count": 4
+    },
+    {
+      "phone": "ˈd",
+      "count": 3
+    },
+    {
+      "phone": "ɾ",
+      "count": 3
+    },
+    {
+      "phone": "e",
+      "count": 3
+    },
+    {
+      "phone": "m",
+      "count": 3
+    },
+    {
+      "phone": "i",
+      "count": 2
+    },
+    {
+      "phone": "o",
+      "count": 2
+    },
+    {
+      "phone": "u",
+      "count": 2
+    }
+  ]
