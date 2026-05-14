@@ -14,7 +14,7 @@ conda activate g2p
 cd $SLURM_SUBMIT_DIR
 
 # Spanish is highly regular so less dropout and augmentation needed
-python run.py \
+python src/run.py \
     --lang es --strategy dedup \
     --output_dir runs/es_dedup_v4 \
     --d_model 384 --num_heads 6 --num_enc_layers 6 --num_dec_layers 6 --d_ff 1024 \
