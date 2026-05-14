@@ -15,6 +15,7 @@ for overlapping train/test items.
 .
 ├── data/                 # English and Spanish TSV splits
 ├── report/               # ACL LaTeX report and references
+├── results/              # Saved metrics, histories, and error analyses
 ├── scripts/              # SLURM launch scripts
 ├── src/
 │   ├── data.py           # Tokenisation, splits, datasets
